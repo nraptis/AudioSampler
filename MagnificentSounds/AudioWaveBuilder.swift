@@ -20,6 +20,7 @@ class AudioWaveModifier {
     var magnitude = [Float](repeating: 0.0, count: 64)
     var percent = [Float](repeating: 0.0, count: 64)
     
+    var positive: Bool
     
     init() {
         r1 = 0.0
@@ -29,6 +30,8 @@ class AudioWaveModifier {
         speed2 = 0.015
         
         back = 0
+        
+        positive = false
     }
     
     func register(magnitude: Float) {
@@ -104,20 +107,25 @@ class AudioWaveBuilder {
         
         for index in 0..<count {
             modifiers[count - 1 - index].back = index * 12
+            
+        }
+        
+        for index in 0..<count {
+            if ((index & 1) == 0) {
+                modifiers[index].positive = true
+            } else {
+                modifiers[index].positive = false
+            }
         }
         
         for index in 0..<count {
             let percent = Float(index) / Float(count - 1)
             nodes[index].x = graphics.width * percent
         }
-        
-        
     }
     
     func draw(renderEncoder: MTLRenderCommandEncoder) {
-        
         audioWave.draw(renderEncoder: renderEncoder)
-        
     }
     
     
@@ -181,11 +189,14 @@ class AudioWaveBuilder {
             
             let percent = buffer[255 - modifiers[index].back]
             
+            var height1 = computedPercent * maxHeight * 0.5
+            if !modifiers[index].positive {
+                height1 = -height1
+            }
             
-            nodes[index].magnitude = (0.5 - computedPercent) * maxHeight + percent * computedMagnitude * maxHeight
+            nodes[index].magnitude = height1 + percent * computedMagnitude * maxHeight * 0.5
             
             //+ computedMagnitude * maxHeight
-            
             //nodes[index].magnitude = modifiers[index].compute() * maxHeight
         }
         
