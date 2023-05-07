@@ -43,7 +43,8 @@
 		0DFAEB972A05234C00A699CB /* super_mario_world_overworld.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0DFAEB952A05234C00A699CB /* super_mario_world_overworld.mp3 */; };
 		0DFAEB982A05234C00A699CB /* super_mario_world_title.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0DFAEB962A05234C00A699CB /* super_mario_world_title.mp3 */; };
 		0DFAEC122A0574B700A699CB /* CubicSpline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFAEC112A0574B700A699CB /* CubicSpline.swift */; };
-		0DFAEC142A05EB3B00A699CB /* AudioWaveBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFAEC132A05EB3B00A699CB /* AudioWaveBuilder.swift */; };
+		EB536FE32A07C198002E1D49 /* WaveCycler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB536FE22A07C198002E1D49 /* WaveCycler.swift */; };
+		EB536FE52A07E2B3002E1D49 /* ColorCycler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB536FE42A07E2B3002E1D49 /* ColorCycler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,7 +86,8 @@
 		0DFAEB952A05234C00A699CB /* super_mario_world_overworld.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = super_mario_world_overworld.mp3; sourceTree = "<group>"; };
 		0DFAEB962A05234C00A699CB /* super_mario_world_title.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = super_mario_world_title.mp3; sourceTree = "<group>"; };
 		0DFAEC112A0574B700A699CB /* CubicSpline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CubicSpline.swift; sourceTree = "<group>"; };
-		0DFAEC132A05EB3B00A699CB /* AudioWaveBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioWaveBuilder.swift; sourceTree = "<group>"; };
+		EB536FE22A07C198002E1D49 /* WaveCycler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveCycler.swift; sourceTree = "<group>"; };
+		EB536FE42A07E2B3002E1D49 /* ColorCycler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCycler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,8 +137,8 @@
 				0DCADC6D2A043674000C577E /* Matrix.swift */,
 				0DCADC6E2A043674000C577E /* Quaternion.swift */,
 				0D8D62262A050BDC00368F30 /* AudioWave.swift */,
-				0DFAEC132A05EB3B00A699CB /* AudioWaveBuilder.swift */,
 				0DCADCA82A048201000C577E /* AudioWaveScene.swift */,
+				EB536FE22A07C198002E1D49 /* WaveCycler.swift */,
 				0DCADC9E2A044704000C577E /* AudioSampler.swift */,
 				0DCADCA02A04471B000C577E /* TimeSampler.swift */,
 				0DCADC5C2A043623000C577E /* Assets.xcassets */,
@@ -144,6 +146,7 @@
 				0DCADC612A043623000C577E /* Info.plist */,
 				0DCADCA42A04494C000C577E /* PlaybackMenuViewController.swift */,
 				0DCADCA52A04494C000C577E /* PlaybackMenuViewController.xib */,
+				EB536FE42A07E2B3002E1D49 /* ColorCycler.swift */,
 			);
 			path = MagnificentSounds;
 			sourceTree = "<group>";
@@ -271,15 +274,16 @@
 				0DCADC8D2A04374C000C577E /* SpriteNodeIndexed.metal in Sources */,
 				0DCADC8E2A04374C000C577E /* Sprite.metal in Sources */,
 				0DCADC722A043675000C577E /* Quaternion.swift in Sources */,
+				EB536FE52A07E2B3002E1D49 /* ColorCycler.swift in Sources */,
 				0DCADC8C2A04374C000C577E /* ShapeNodeIndexed.metal in Sources */,
 				0DCADCA92A048201000C577E /* AudioWaveScene.swift in Sources */,
 				0DCADCB42A0493FF000C577E /* RecyclerShapeTriangle2D.swift in Sources */,
-				0DFAEC142A05EB3B00A699CB /* AudioWaveBuilder.swift in Sources */,
 				0DCADC712A043675000C577E /* Matrix.swift in Sources */,
 				0DCADC912A04374C000C577E /* MetalEngine.swift in Sources */,
 				0DCADC922A04374C000C577E /* MetalViewController.swift in Sources */,
 				0DFAEC122A0574B700A699CB /* CubicSpline.swift in Sources */,
 				0D8D62272A050BDC00368F30 /* AudioWave.swift in Sources */,
+				EB536FE32A07C198002E1D49 /* WaveCycler.swift in Sources */,
 				0DCADC972A04374C000C577E /* Uniforms.swift in Sources */,
 				0DCADC902A04374C000C577E /* MetalPipeline.swift in Sources */,
 				0DCADC962A04374C000C577E /* UniformsSpriteNodeIndexed.swift in Sources */,

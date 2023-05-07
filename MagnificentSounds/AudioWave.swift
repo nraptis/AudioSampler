@@ -107,19 +107,23 @@ class AudioWave {
         guard let drawNodesBuffer = drawNodesBuffer else { return }
         guard let drawIndicesBuffer = drawIndicesBuffer else { return }
         
-        graphics.set(pipelineState: .shapeNodeColoredIndexed2DAlphaBlending, renderEncoder: renderEncoder)
-        
-        graphics.setVertexUniformsBuffer(uniformsShapeNodeIndexedVertexBuffer, renderEncoder: renderEncoder)
-        graphics.setFragmentUniformsBuffer(uniformsShapeNodeIndexedFragmentBuffer, renderEncoder: renderEncoder)
-        
-        graphics.setVertexDataBuffer(drawNodesBuffer, renderEncoder: renderEncoder)
-        
-        
-        renderEncoder.drawIndexedPrimitives(type: .triangle,
-                                            indexCount: drawIndices.count,
-                                            indexType: .uint16,
-                                            indexBuffer: drawIndicesBuffer,
-                                            indexBufferOffset: 0)
+        if drawIndices.count >= 6 {
+            
+            graphics.set(pipelineState: .shapeNodeColoredIndexed2DAlphaBlending, renderEncoder: renderEncoder)
+            
+            graphics.setVertexUniformsBuffer(uniformsShapeNodeIndexedVertexBuffer, renderEncoder: renderEncoder)
+            graphics.setFragmentUniformsBuffer(uniformsShapeNodeIndexedFragmentBuffer, renderEncoder: renderEncoder)
+            
+            graphics.setVertexDataBuffer(drawNodesBuffer, renderEncoder: renderEncoder)
+            
+            
+            renderEncoder.drawIndexedPrimitives(type: .triangle,
+                                                indexCount: drawIndices.count,
+                                                indexType: .uint16,
+                                                indexBuffer: drawIndicesBuffer,
+                                                indexBufferOffset: 0)
+            
+        }
         
         
         /*

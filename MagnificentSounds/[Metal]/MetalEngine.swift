@@ -42,12 +42,6 @@ class MetalEngine {
         layer.device = device
         layer.contentsScale = scale
         layer.frame = CGRect(x: 0.0, y: 0.0, width: CGFloat(graphics.width), height: CGFloat(graphics.height))
-        
-        print("awake layer size \(layer.frame.width) x \(layer.frame.height)")
-        print("awake layer scale \(scale)")
-        
-        
-        
     }
     
     func load() {
@@ -67,7 +61,7 @@ class MetalEngine {
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
         renderPassDescriptor.colorAttachments[0].storeAction = .multisampleResolve
         renderPassDescriptor.colorAttachments[0].resolveTexture = drawable.texture
-        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0.055, green: 0.125, blue: 0.105, alpha: 1.0)
+        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
 
         if let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) {
             delegate.draw(renderEncoder: renderEncoder)
