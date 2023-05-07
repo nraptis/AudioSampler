@@ -19,14 +19,14 @@ class ColorCycler {
     var nodes = [ColorCyclerNode]()
     
     func add(red: Float, green: Float, blue: Float) {
-        nodes.append(ColorCyclerNode(red: red, green: green, blue: blue, alpha: 1.0))
+        nodes.append(ColorCyclerNode(red: red, green: green, blue: blue, alpha: 0.5))
     }
     
     var maxPos: Float {
         if nodes.count <= 1 {
             return 1.0
         } else {
-            return Float(nodes.count + 1)
+            return Float(nodes.count)
         }
     }
     
@@ -49,7 +49,7 @@ class ColorCycler {
                 result.blue = nodes[0].blue
                 result.alpha = nodes[0].alpha
             }
-            else if index > nodes.count {
+            else if index >= nodes.count {
                 result.red = nodes[nodes.count - 1].red
                 result.green = nodes[nodes.count - 1].green
                 result.blue = nodes[nodes.count - 1].blue

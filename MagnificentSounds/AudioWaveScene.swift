@@ -40,7 +40,7 @@ class AudioWaveScene: GraphicsDelegate {
         result.sampleSmoothingCount = 6
         result.heightFactor = 1.0
         result.xShift = 0.0
-        result.thickness = 6.0
+        result.thickness = 4.0
         
         result.colorCycler.add(red: 1.0, green: 0.0, blue: 0.0)
         result.colorCycler.add(red: 1.0, green: 0.5, blue: 0.0)
@@ -60,7 +60,7 @@ class AudioWaveScene: GraphicsDelegate {
         result.sampleSmoothingCount = 6
         result.heightFactor = 0.9
         result.xShift = 4.0
-        result.thickness = 5.5
+        result.thickness = 4.0
         
         result.colorCycler.add(red: 0.0, green: 0.0, blue: 1.0)
         result.colorCycler.add(red: 1.0, green: 0.0, blue: 1.0)
@@ -103,7 +103,7 @@ class AudioWaveScene: GraphicsDelegate {
         result.sampleSmoothingCount = 6
         result.heightFactor = 0.80
         result.xShift = 12.0
-        result.thickness = 4.5
+        result.thickness = 4.0
         
         result.colorCycler.add(red: 1.0, green: 0.5, blue: 0.0)
         result.colorCycler.add(red: 1.0, green: 1.0, blue: 0.0)
@@ -145,7 +145,7 @@ class AudioWaveScene: GraphicsDelegate {
         result.sampleSmoothingCount = 6
         result.heightFactor = 0.70
         result.xShift = 20.0
-        result.thickness = 3.5
+        result.thickness = 4.0
         
         
         result.colorCycler.add(red: 0.0, green: 1.0, blue: 1.0)

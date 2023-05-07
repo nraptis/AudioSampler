@@ -70,9 +70,20 @@ class WaveCycler {
     private var cyclerNodesCompleted = [WaveCyclerNode]()
     private var cyclerNodesKeep = [WaveCyclerNode]()
     
-    lazy var audioWave: AudioWave = {
+    lazy var audioWave1: AudioWave = {
        AudioWave(graphics: graphics)
     }()
+    lazy var audioWave2: AudioWave = {
+       AudioWave(graphics: graphics)
+    }()
+    /*
+    lazy var audioWave3: AudioWave = {
+       AudioWave(graphics: graphics)
+    }()
+    lazy var audioWave4: AudioWave = {
+       AudioWave(graphics: graphics)
+    }()
+    */
     
     var audioWaveNodes = [AudioWaveNode]()
     
@@ -104,12 +115,15 @@ class WaveCycler {
     
     var thickness: Float {
         set {
-            audioWave.thickness = newValue
+            audioWave1.thickness = newValue
+            audioWave2.thickness = newValue
         }
         get {
-            audioWave.thickness
+            audioWave1.thickness
         }
     }
+    
+    var colorOffset: Float = 0.0
     
     let graphics: Graphics
     let audioWaveScene: AudioWaveScene
@@ -123,6 +137,11 @@ class WaveCycler {
     }
     
     func update() {
+        
+        colorOffset += 0.1
+        if colorOffset > colorCycler.maxPos {
+            colorOffset -= colorCycler.maxPos
+        }
         
         let pi2 = Float.pi * 2.0
         
@@ -168,7 +187,7 @@ class WaveCycler {
             node.percent = samplePercent(node: node)
             
             node.sineAngle = Float.pi
-            node.sineAngleSpeed = Float.random(in: 0.02...0.04)
+            node.sineAngleSpeed = Float.random(in: 0.01...0.05)
             
             cyclerNodes.append(node)
             
@@ -267,6 +286,26 @@ class WaveCycler {
             audioWaveNodes.append(AudioWaveNode(x: 0.0, magnitude: 0.0))
         }
         
+        
+        
+        
+        
+        for index in 0..<cyclerNodes.count {
+            let node = cyclerNodes[index]
+            
+            let sine = sinf(globalSineAngle + node.sineAngle)
+            
+            let x = node.x + xShift
+            let y = centerY + node.percent * node.directionFactor * baseHeight
+            
+            audioWaveNodes[index].x = x
+            audioWaveNodes[index].magnitude = node.percent * node.directionFactor * baseHeight * sine * clampFactor * heightFactor * 0.75
+        }
+        
+        audioWave2.set(nodes: audioWaveNodes, count: cyclerNodes.count)
+        audioWave2.draw(renderEncoder: renderEncoder, colorCycler: colorCycler, colorOffset: colorOffset + 1.0, colorSpeed: 0.02)
+        
+        
         for index in 0..<cyclerNodes.count {
             let node = cyclerNodes[index]
             
@@ -277,24 +316,10 @@ class WaveCycler {
             
             audioWaveNodes[index].x = x
             audioWaveNodes[index].magnitude = node.percent * node.directionFactor * baseHeight * sine * clampFactor * heightFactor
-            
-            /*
-            audioWaveScene.recyclerShapeQuad2D.set(red: 1.0, green: 0.25, blue: 0.125, alpha: 1.0)
-            audioWaveScene.recyclerShapeQuad2D.drawRect(graphics: graphics,
-                                                        renderEncoder: renderEncoder,
-                                                        projection: projection,
-                                                        modelView: modelView,
-                                                        origin: simd_float2(x: x - 3.0, y: y - 3.0),
-                                                        size: simd_float2(x: 7.0, y: 7.0))
-            */
-
-            
         }
         
-        
-        audioWave.set(nodes: audioWaveNodes, count: cyclerNodes.count)
-        
-        audioWave.draw(renderEncoder: renderEncoder)
+        audioWave1.set(nodes: audioWaveNodes, count: cyclerNodes.count)
+        audioWave1.draw(renderEncoder: renderEncoder, colorCycler: colorCycler, colorOffset: colorOffset, colorSpeed: 0.02)
         
         
         

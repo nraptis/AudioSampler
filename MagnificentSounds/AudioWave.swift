@@ -100,9 +100,9 @@ class AudioWave {
         
     }
     
-    func draw(renderEncoder: MTLRenderCommandEncoder) {
+    func draw(renderEncoder: MTLRenderCommandEncoder, colorCycler: ColorCycler, colorOffset: Float, colorSpeed: Float) {
         
-        generate(graphics: graphics)
+        generate(graphics: graphics, colorCycler: colorCycler, colorOffset: colorOffset, colorSpeed: colorSpeed)
         
         guard let drawNodesBuffer = drawNodesBuffer else { return }
         guard let drawIndicesBuffer = drawIndicesBuffer else { return }
@@ -170,108 +170,7 @@ class AudioWave {
         */
     }
     
-    func drawMarkers(renderEncoder: MTLRenderCommandEncoder, recyclerShapeQuad2D: RecyclerShapeQuad2D) {
-        
-        generate(graphics: graphics)
-        
-        let centerY = Float(Int(graphics.height * 0.5 + 0.5))
-        
-        var matrixProjection = simd_float4x4()
-        matrixProjection.ortho(width: graphics.width, height: graphics.height)
-        
-        let matrixModelView = matrix_identity_float4x4
-        
-        recyclerShapeQuad2D.set(red: 1.0, green: 1.0, blue: 1.0)
-        
-        for index in 0..<nodeCount {
-            let node = nodes[index]
-            
-            let x = node.x
-            let y: Float
-            let height: Float
-            if node.magnitude < 0.0 {
-                y = centerY + node.magnitude
-                height = -node.magnitude
-            } else {
-                y = centerY
-                height = node.magnitude
-            }
-            
-            //+ node.magnitude
-            if node.magnitude < 0 {
-                
-            }
-            
-            recyclerShapeQuad2D.drawRect(graphics: graphics,
-                                         renderEncoder: renderEncoder,
-                                         projection: matrixProjection,
-                                         modelView: matrixModelView,
-                                         origin: simd_float2(x, y), size: simd_float2(40.0, height))
-            
-        }
-        
-        
-        
-        
-        
-        
-        for index in 0..<listX.count {
-            let x = listX[index]
-            let y = listY[index]
-            
-            let percent1 = Float(index) / Float(listX.count - 1)
-            var percent2 = percent1 + 0.5
-            if percent2 > 1.0 { percent2 -= 1.0 }
-            
-            recyclerShapeQuad2D.set(red: percent1, green: percent2, blue: (1.0 + sinf(percent2 * Float.pi * 2.0)) / 2.0)
-            recyclerShapeQuad2D.drawRect(graphics: graphics,
-                                         renderEncoder: renderEncoder,
-                                         projection: matrixProjection,
-                                         modelView: matrixModelView,
-                                         origin: simd_float2(x - 2.0, y - 2.0), size: simd_float2(3.0, 3.0))
-            
-        }
-        
-        
-        for index in 0..<listX.count {
-            let x = listX[index]
-            let y = listY[index]
-            
-            let nx = normX[index]
-            let ny = normY[index]
-            
-            recyclerShapeQuad2D.drawLine(graphics: graphics,
-                                         renderEncoder: renderEncoder,
-                                         projection: matrixProjection,
-                                         modelView: matrixModelView,
-                                         p1: simd_float2(x, y), p2: simd_float2(x + nx * 10.0, y + ny * 10.0))
-            
-        }
-        
-        
-        /*
-        while pos <= spline.maxPos {
-            
-            let percent = pos / spline.maxPos
-            
-            let point = spline.get(pos)
-            let x = point.x
-            let y = point.y
-            
-            recyclerShapeQuad2D.set(red: percent, green: 1.0 - percent, blue: sinf(percent * Float.pi))
-            recyclerShapeQuad2D.drawRect(graphics: graphics,
-                                         renderEncoder: renderEncoder,
-                                         projection: matrixProjection,
-                                         modelView: matrixModelView,
-                                         origin: simd_float2(x, y), size: simd_float2(4.0, 4.0))
-            
-            pos += 0.025
-        }
-        */
-        
-    }
-    
-    func generate(graphics: Graphics) {
+    func generate(graphics: Graphics, colorCycler: ColorCycler, colorOffset: Float, colorSpeed: Float) {
         
         let centerY = Float(Int(graphics.height * 0.5 + 0.5))
         
@@ -304,6 +203,7 @@ class AudioWave {
         
         var bigLoops = 0
         var smallLoops = 0
+        
         while true {
             
             var lastPos = pos
@@ -497,6 +397,9 @@ class AudioWave {
         //var  = [DrawNode]()
         //var indices = [Int16]()
         
+        var colorPos = colorOffset
+        var colorPosMax = colorCycler.maxPos
+        
         index = 0
         while index < listX.count {
             
@@ -514,13 +417,34 @@ class AudioWave {
             let x2 = x - nx * thickness
             let y2 = y - ny * thickness
             
-            let node1 = DrawNode(x: x1, y: y1, r: percent, g: 0.5, b: 1.0, a: 0.75)
-            let node2 = DrawNode(x: x2, y: y2, r: 1.0, g: 1.0, b: 1.0 - percent, a: 0.75)
+            /*
+            var colorPos = (x * 6.0) / graphics.width + colorOffset
+            if colorPos < 0.0 {
+                colorPos = 0.0
+            }
+            while colorPos >= colorPosMax {
+                colorPos -= colorPosMax
+            }
+            
+            let color = colorCycler.get(pos: colorPos)
+            */
+            let r = Float.random(in: 0.75...1.0)
+            let g = Float.random(in: 0.75...1.0)
+            let b = Float.random(in: 0.75...1.0)
+            
+            
+            let node1 = DrawNode(x: x1, y: y1, r: r, g: g, b: b, a: 1.0)
+            let node2 = DrawNode(x: x2, y: y2, r: r, g: g, b: b, a: 1.0)
             
             drawNodes.append(node1)
             drawNodes.append(node2)
             
             index += 1
+            
+            colorPos += colorSpeed
+            if colorPos > colorPosMax {
+                colorPos -= colorPosMax
+            }
         }
         
         // 0    1
